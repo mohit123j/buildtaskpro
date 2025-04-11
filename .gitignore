@@ -1,0 +1,20 @@
+# === General ===
+.DS_Store
+Thumbs.db
+.vscode/
+*.env
+*.log
+
+# === Node.js ===
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# === Client (React) ===
+client/node_modules/
+client/.env
+client/build/
+
+# === Server (Node) ===
+server/node_modules/
+server/.env

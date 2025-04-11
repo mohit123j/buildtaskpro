@@ -1,0 +1,11 @@
+{
+  "name": "buildtaskpro",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "concurrently \"npm start --prefix client\" \"npm run server\"",
+    "server": "cd server && npx nodemon app.js"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
