@@ -15,7 +15,9 @@
 - User registration and login
 - Role-based access control
 - Session persistence using localStorage
-- Manager dashboard to view and manage tasks
+- Manager dashboard to view and manage tasks, workers, and equipments
+- Worker dashboard to manage assigned tasks, request equipments
+- Admin dashboard to Generate Report: Generate daily summary of site activities
 - Secure password storage with bcrypt
 - Clean, scalable full-stack structure
 
@@ -26,6 +28,7 @@
 ```
 buildtaskpro/
 ├── client/             # React frontend
+│   ├── public/
 │   ├── src/
 │   └── .env
 ├── server/             # Node backend
@@ -46,7 +49,7 @@ buildtaskpro/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/buildtaskpro.git
+git clone https://github.com/mohit123j/buildtaskpro.git
 cd buildtaskpro
 ```
 

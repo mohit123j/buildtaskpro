@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = ({ onRegistered }) => {
     const [username, setUsername] = useState('');
@@ -8,6 +9,7 @@ const Register = ({ onRegistered }) => {
     const [confirm, setConfirm] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,7 +31,7 @@ const Register = ({ onRegistered }) => {
             setUsername('');
             setPassword('');
             setConfirm('');
-            onRegistered(); // Redirect to login
+            navigate('/login'); // Redirect to login
         } catch (err) {
             setError(err.response?.data?.message || 'Registration failed');
         }

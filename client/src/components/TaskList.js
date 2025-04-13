@@ -1,8 +1,31 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
 const TaskList = () => {
-  // You can later fetch from backend here using useEffect
+  // Fetch from backend here using useEffect
+  const [tasks, setTasks] = useState([]);
+  
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const token = localStorage.getItem('token');
+
+      try {
+        const res = await axios.get('http://localhost:5000/api/tasks', {
+          headers: {
+            Authorization: `Bearer ${token}`  // 🔐 Send token to backend
+          }
+        });
+
+        setTasks(res.data);
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <Table striped bordered hover>

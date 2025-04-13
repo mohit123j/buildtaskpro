@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Card, Alert } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const Login = ({ onLogin, onSwitchToRegister }) => {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
+  const onSwitchToRegister = () => {
+    navigate('/register');
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
@@ -17,7 +22,10 @@ const Login = ({ onLogin, onSwitchToRegister }) => {
         password
       });
 
+      // 🔐 Save token and user to localStorage
+      localStorage.setItem('token', res.data.token);
       onLogin(res.data.user); // Update app with logged-in user
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
