@@ -25,7 +25,7 @@ const Login = ({ onLogin }) => {
       // 🔐 Save token and user to localStorage
       localStorage.setItem('token', res.data.token);
       onLogin(res.data.user); // Update app with logged-in user
-      navigate('/');
+      navigate('/home');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }

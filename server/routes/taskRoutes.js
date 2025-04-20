@@ -10,9 +10,15 @@ router.get('/', authenticateToken, async (req, res) => {
 });
 
 // POST create a task
-router.post('/', async (req, res) => {
-  const newTask = await Task.create(req.body);
-  res.status(201).json(newTask);
+router.post('/', authenticateToken, async (req, res) => {
+
+  try{
+    const newTask = await Task.create(req.body);
+    res.status(201).json(newTask);
+  } catch(err){
+    console.error('Task creation failed:', err);
+    res.status(500).json({ message: 'Failed to create task' });
+  }
 });
 
 // PUT update a task

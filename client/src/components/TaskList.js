@@ -1,11 +1,12 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Table, Spinner, Alert } from 'react-bootstrap';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 
 const TaskList = () => {
   // Fetch from backend here using useEffect
   const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   
   useEffect(() => {
     const fetchTasks = async () => {
@@ -21,14 +22,21 @@ const TaskList = () => {
         setTasks(res.data);
       } catch (err) {
         console.error('Error fetching tasks:', err);
+        setError('Failed to fetch tasks. Please try again.');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchTasks();
   }, []);
 
+  if (loading) return <Spinner animation="border" className="mt-4 d-block mx-auto" />;
+
+  if (error) return <Alert variant="danger" className="mt-4 text-center">{error}</Alert>;
+
   return (
-    <Table striped bordered hover>
+    <Table striped bordered hover responsive className="mt-4">
       <thead>
         <tr>
           <th>#</th>
@@ -39,14 +47,15 @@ const TaskList = () => {
         </tr>
       </thead>
       <tbody>
-        {/* Static placeholder row for now */}
-        <tr>
-          <td>1</td>
-          <td>Lay foundation</td>
-          <td>John Doe</td>
-          <td>Pending</td>
-          <td>2025-04-30</td>
-        </tr>
+        {tasks.map((task, index) => (
+          <tr key={task.id}>
+            <td>{index + 1}</td>
+            <td>{task.title}</td>
+            <td>{task.assignedTo || '—'}</td>
+            <td>{task.status}</td>
+            <td>{new Date(task.dueDate).toLocaleDateString()}</td>
+          </tr>
+        ))}
       </tbody>
     </Table>
   );

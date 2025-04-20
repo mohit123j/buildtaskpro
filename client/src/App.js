@@ -6,6 +6,9 @@ import AppNavbar from './components/Navbar';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import NotFound from './pages/NotFound';
+import ManageTasks from './pages/ManageTasks';
+import ManageWorkers from './pages/ManageWorkers';
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -68,9 +71,19 @@ const App = () => {
           <Route path="/home" element={
             user ? <Home user={user} /> : <Navigate to="/login" replace />
           } />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
+          <Route path="/manage/tasks" element={
+            user && user.role === 'manager'? <ManageTasks user={user} /> : <Navigate to="/login" replace /> } />
+          <Route path="/manage/workers" element={
+            user && user.role === 'manager'? <ManageWorkers user={user} /> : <Navigate to="/login" replace /> } />
         </Routes>
 
-        {redirectToLogin && <Navigate to="/login" replace />}
+        {redirectToLogin && (() => {
+          setRedirectToLogin(false); // ✅ reset it
+          return <Navigate to="/login" replace />;
+          })()
+        }
       </>
     );
   };
